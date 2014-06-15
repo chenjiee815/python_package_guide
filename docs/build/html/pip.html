@@ -48,6 +48,7 @@
   <div class="section" id="pip">
 <h1>PIP<a class="headerlink" href="#pip" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://pip.pypa.io/en/latest/">pip官方文档</a></p>
+<p>以下内容是根据pip的1.5.X版本的官方文档写的笔记。</p>
 <div class="section" id="id1">
 <h2>安装pip<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>可以下载 <a class="reference external" href="https://bootstrap.pypa.io/get-pip.py/">get-pip.py</a> ，
@@ -173,12 +174,36 @@ find-links =
 </li>
 </ul>
 </div>
+<div class="section" id="id7">
+<h3>配置的优先级<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>刚才讲到一个参数的三种配置方法优先级顺序是：</p>
+<ol class="arabic simple">
+<li>命令行</li>
+<li>环境变量</li>
+<li>配置文件</li>
+</ol>
+</div>
+<div class="section" id="id8">
+<h3>命令的自动补全<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>用过bash/zsh环境的人都知道有自动补全功能。</p>
+<p>pip命令想要自动补全功能的话，可以运行以下命令：</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip completion --bash &gt;&gt; ~/.profile
+
+$ pip completion --zsh &gt;&gt; ~/.zprofile
+</pre></div>
+</div>
+<p>加入到profile文件后，需要重新进入bash/zsh环境才能生效，
+你也可以运行以下命令，立即生效自动补全功能：</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ eval &quot;`pip completion --bash`&quot;
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="pip-install">
 <h2>pip install<a class="headerlink" href="#pip-install" title="Permalink to this headline">¶</a></h2>
 <p>安装Python包</p>
-<div class="section" id="id7">
-<h3>使用方法<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id9">
+<h3>使用方法<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <div class="code bash highlight-python"><div class="highlight"><pre>$ pip install [options] &lt;requirement specifier&gt; ...
 
 $ pip install [options] -r &lt;requirements file&gt; ...
@@ -195,16 +220,16 @@ $ pip install [options] &lt;archive url/path&gt; ...
 <div class="section" id="pip-uninstall">
 <h2>pip uninstall<a class="headerlink" href="#pip-uninstall" title="Permalink to this headline">¶</a></h2>
 <p>卸载Python包</p>
-<div class="section" id="id8">
-<h3>使用方法<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id10">
+<h3>使用方法<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <div class="code bash highlight-python"><div class="highlight"><pre>$ pip uninstall [options] &lt;package&gt; ...
 
 $ pip uninstall [options] -r &lt;requirements file&gt; ...
 </pre></div>
 </div>
 </div>
-<div class="section" id="id9">
-<h3>已知缺陷<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id11">
+<h3>已知缺陷<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <p>目前已知的两种无法正常删除的情况：</p>
 <ul class="simple">
 <li>完全使用disutils模块制定的Python包，
@@ -213,8 +238,8 @@ $ pip uninstall [options] -r &lt;requirements file&gt; ...
 <li>通过 <cite>python setup.py develp</cite> 来安装的脚本。</li>
 </ul>
 </div>
-<div class="section" id="id10">
-<h3>参数<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id12">
+<h3>参数<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <table class="docutils option-list" frame="void" rules="none">
 <col class="option" />
 <col class="description" />
@@ -233,14 +258,14 @@ $ pip uninstall [options] -r &lt;requirements file&gt; ...
 <div class="section" id="pip-freeze">
 <h2>pip freeze<a class="headerlink" href="#pip-freeze" title="Permalink to this headline">¶</a></h2>
 <p>将当前Python环境所有的安装包名输出成requirements格式。</p>
-<div class="section" id="id11">
-<h3>使用方法<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id13">
+<h3>使用方法<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <div class="code bash highlight-python"><div class="highlight"><pre>$ pip freeze [options]
 </pre></div>
 </div>
 </div>
-<div class="section" id="id12">
-<h3>参数<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id14">
+<h3>参数<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <table class="docutils option-list" frame="void" rules="none">
 <col class="option" />
 <col class="description" />
@@ -268,8 +293,8 @@ requirement文件中有的Python包名则不再显示。</li>
 </tbody>
 </table>
 </div>
-<div class="section" id="id13">
-<h3>常见应用场景<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id15">
+<h3>常见应用场景<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <p>当你需要将一个virtualenv环境中复制到另外一个virtualenv环境时，
 你可以先在源virtualenv环境运行命令：</p>
 <div class="code bash highlight-python"><div class="highlight"><pre>$ pip freeze &gt; requirements.txt
@@ -292,18 +317,18 @@ Python版本或者操作系统不一样，
 </div>
 <div class="section" id="pip-list">
 <h2>pip list<a class="headerlink" href="#pip-list" title="Permalink to this headline">¶</a></h2>
-<p>列出当前环境所有已经安装的Python包，包括可编辑的包。</p>
+<p>列出当前环境所有已经安装的Python包，包括可编辑的包（including editables）。</p>
 <p>好像功能和 <cite>pip freeze</cite> 功能差不多的么，
 只是输出的格式不一样。</p>
 <p>可编辑的包是啥意思？暂时还不清楚。</p>
-<div class="section" id="id14">
-<h3>使用方法<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id16">
+<h3>使用方法<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
 <div class="code bash highlight-python"><div class="highlight"><pre>$ pip list [options]
 </pre></div>
 </div>
 </div>
-<div class="section" id="id15">
-<h3>参数<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id17">
+<h3>参数<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
 <table class="docutils option-list" frame="void" rules="none">
 <col class="option" />
 <col class="description" />
@@ -363,10 +388,67 @@ then look for archives in the directory listing.</td></tr>
 </table>
 </div>
 </div>
-<div class="section" id="id16">
-<h2>其它<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id17">
-<h3>国内镜像源<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="pip-show">
+<h2>pip show<a class="headerlink" href="#pip-show" title="Permalink to this headline">¶</a></h2>
+<p>列出一个或者多个包的信息</p>
+<div class="section" id="id18">
+<h3>使用方法<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip show [options] &lt;package&gt; ...
+</pre></div>
+</div>
+</div>
+<div class="section" id="id19">
+<h3>参数<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-f</span>, <span class="option">--files</span></kbd></td>
+<td>列出一个已安装包中的所有文件</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="pip-search">
+<h2>pip search<a class="headerlink" href="#pip-search" title="Permalink to this headline">¶</a></h2>
+<p>从 <cite>Python Package Index</cite> 上查找
+Python包名或者其简要描述中包含关键字（&lt;query&gt;）的Python包。</p>
+<div class="section" id="id20">
+<h3>使用方法<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip search [options] &lt;query&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="id21">
+<h3>参数<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<p>&#8211;index &lt;url&gt; <cite>Python Package Index</cite> URL地址</p>
+</div>
+</div>
+<div class="section" id="pip-wheel">
+<h2>pip wheel<a class="headerlink" href="#pip-wheel" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id22">
+<h3>使用方法<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip pip wheel [options] &lt;requirement specifier&gt; ...
+
+$ pip wheel [options] -r &lt;requirements file&gt; ...
+
+$ pip wheel [options] &lt;vcs project url&gt; ...
+
+$ pip wheel [options] &lt;local project path&gt; ...
+
+$ pip wheel [options] &lt;archive url/path&gt; ...
+</pre></div>
+</div>
+</div>
+<div class="section" id="id23">
+<h3>参数<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id24">
+<h2>其它<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id25">
+<h3>国内镜像源<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><a class="reference external" href="http://pypi.douban.com/">豆瓣PyPI</a></li>
 <li><a class="reference external" href="http://pypi.hustunique.com/">华中理工大学PyPI</a></li>
@@ -402,31 +484,48 @@ index-url = http://pypi.douban.com/simple
 <li><a class="reference internal" href="#id4">配置</a><ul>
 <li><a class="reference internal" href="#id5">配置文件</a></li>
 <li><a class="reference internal" href="#id6">环境变量</a></li>
+<li><a class="reference internal" href="#id7">配置的优先级</a></li>
+<li><a class="reference internal" href="#id8">命令的自动补全</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#pip-install">pip install</a><ul>
-<li><a class="reference internal" href="#id7">使用方法</a></li>
+<li><a class="reference internal" href="#id9">使用方法</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#pip-uninstall">pip uninstall</a><ul>
-<li><a class="reference internal" href="#id8">使用方法</a></li>
-<li><a class="reference internal" href="#id9">已知缺陷</a></li>
-<li><a class="reference internal" href="#id10">参数</a></li>
+<li><a class="reference internal" href="#id10">使用方法</a></li>
+<li><a class="reference internal" href="#id11">已知缺陷</a></li>
+<li><a class="reference internal" href="#id12">参数</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#pip-freeze">pip freeze</a><ul>
-<li><a class="reference internal" href="#id11">使用方法</a></li>
-<li><a class="reference internal" href="#id12">参数</a></li>
-<li><a class="reference internal" href="#id13">常见应用场景</a></li>
+<li><a class="reference internal" href="#id13">使用方法</a></li>
+<li><a class="reference internal" href="#id14">参数</a></li>
+<li><a class="reference internal" href="#id15">常见应用场景</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#pip-list">pip list</a><ul>
-<li><a class="reference internal" href="#id14">使用方法</a></li>
-<li><a class="reference internal" href="#id15">参数</a></li>
+<li><a class="reference internal" href="#id16">使用方法</a></li>
+<li><a class="reference internal" href="#id17">参数</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id16">其它</a><ul>
-<li><a class="reference internal" href="#id17">国内镜像源</a></li>
+<li><a class="reference internal" href="#pip-show">pip show</a><ul>
+<li><a class="reference internal" href="#id18">使用方法</a></li>
+<li><a class="reference internal" href="#id19">参数</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pip-search">pip search</a><ul>
+<li><a class="reference internal" href="#id20">使用方法</a></li>
+<li><a class="reference internal" href="#id21">参数</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pip-wheel">pip wheel</a><ul>
+<li><a class="reference internal" href="#id22">使用方法</a></li>
+<li><a class="reference internal" href="#id23">参数</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id24">其它</a><ul>
+<li><a class="reference internal" href="#id25">国内镜像源</a></li>
 </ul>
 </li>
 </ul>

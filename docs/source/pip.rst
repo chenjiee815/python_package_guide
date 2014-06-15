@@ -147,6 +147,34 @@ pip的命令行参数也可以通过环境变量来设置。
      $ pip install --find-links=http://mirror1.example.com
      --find-links=http://mirror2.example.com
 
+配置的优先级
+~~~~~~~~~~~~
+刚才讲到一个参数的三种配置方法优先级顺序是：
+
+1. 命令行
+   
+2. 环境变量
+     
+3. 配置文件
+
+命令的自动补全
+~~~~~~~~~~~~~~
+用过bash/zsh环境的人都知道有自动补全功能。
+
+pip命令想要自动补全功能的话，可以运行以下命令：
+
+.. code:: bash
+
+   $ pip completion --bash >> ~/.profile
+
+   $ pip completion --zsh >> ~/.zprofile
+
+加入到profile文件后，需要重新进入bash/zsh环境才能生效，
+你也可以运行以下命令，立即生效自动补全功能：
+
+.. code:: bash
+
+   $ eval "`pip completion --bash`"
 
 pip install
 -----------
@@ -166,6 +194,42 @@ pip install
 
    $ pip install [options] <archive url/path> ...
 
+本地快速安装
+~~~~~~~~~~~~
+1. 下载你所需要的所有的Python包
+
+.. code:: bash
+   
+   $ pip install --download <DIR> -r requirements.txt
+
+2. 使用以下命令即可安装刚才下载到本地的Python包
+
+.. code:: bash
+
+   $ pip install --no-index --find-links=[file://]<DIR> -r requirements.txt
+
+非递归式升级
+~~~~~~~~~~~~
+其实就是只升级你需要的包，但是该包所依赖的包不安装/升级。
+
+.. code:: bash
+
+   $ pip install --upgrade --no-deps SomePackage
+
+特定用户安装
+~~~~~~~~~~~~
+从Python2.6开始，Python就支持将Python包安装到指定的用户目录了。
+
+该用户的目录默认值是由 `site.USER_BASE` 所指定的。
+
+如果想覆盖该值，则使用环境变量 `PYTHONUSERBASE` 。
+
+可以通过 `--user` 参数来指定特定用户。
+
+.. code:: bash
+
+   $ export PYTHONUSERBASE=/myappenv
+   $ pip install --user SomePackage
 
 pip uninstall
 -------------
