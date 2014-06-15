@@ -51,6 +51,11 @@
             
   <div class="section" id="id1">
 <h1>打包工具对比<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<dl class="docutils">
+<dt>我先给出对比结果：</dt>
+<dd>推荐使用setuptools + pip</dd>
+</dl>
+<p>具体原因看下文。</p>
 <div class="section" id="distutils">
 <h2>distutils<a class="headerlink" href="#distutils" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -73,6 +78,7 @@
 <li>用新命令或setup()参数扩展distutils，为多个项目发布/重用扩展。</li>
 <li>基本满足大型项目的安装和发布。</li>
 </ul>
+<p>setuptools的诸多功能下面会有具体讲解。</p>
 </div>
 <div class="section" id="distribute">
 <h2>distribute<a class="headerlink" href="#distribute" title="Permalink to this headline">¶</a></h2>
@@ -96,6 +102,7 @@
 <li>支持安装、卸载包。</li>
 <li>支持从任意能够通过VCS或浏览器访问到的地址安装Python包。</li>
 </ul>
+<p>pip功能之强大，可以看下面专门讲解PIP的章节。</p>
 </div>
 <div class="section" id="distutils2">
 <h2>distutils2<a class="headerlink" href="#distutils2" title="Permalink to this headline">¶</a></h2>

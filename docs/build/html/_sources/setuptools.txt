@@ -1,5 +1,5 @@
 ================
- setuptools教程
+ setuptools指南
 ================
 
 `setuptools官方文档`_

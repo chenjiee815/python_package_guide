@@ -11,7 +11,6 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   setup_py
    package_tools
    setuptools
    pip
