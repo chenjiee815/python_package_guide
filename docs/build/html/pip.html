@@ -1,0 +1,478 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PIP &mdash; Python打包指南 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Python打包指南 1.0 documentation" href="index.html" />
+    <link rel="prev" title="setuptools教程" href="setuptools.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="setuptools.html" title="setuptools教程"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Python打包指南 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="pip">
+<h1>PIP<a class="headerlink" href="#pip" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://pip.pypa.io/en/latest/">pip官方文档</a></p>
+<div class="section" id="id1">
+<h2>安装pip<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>可以下载 <a class="reference external" href="https://bootstrap.pypa.io/get-pip.py/">get-pip.py</a> ，
+运行命令：</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ python get-pip.py
+</pre></div>
+</div>
+<p>如果setuptools没有安装，该命令同时也会安装它。</p>
+<p>如果已经安装了setuptools库，那么可以通过easy_install安装：</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ easy_install pip
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>升级pip<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>在Linux系统上：</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip insall -U pip
+</pre></div>
+</div>
+<p>在Windows系统上：</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ python -m pipi install -U pip
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>常用命令介绍<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">安装包</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip install SomePackage
+</pre></div>
+</div>
+</li>
+<li><p class="first">升级包</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip install --upgrade SomePackage
+
+$ pip install -U SomePackage
+</pre></div>
+</div>
+</li>
+<li><p class="first">删除包</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip uninstall SomePackage
+</pre></div>
+</div>
+</li>
+<li><p class="first">查看某个包安装了哪些文件</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip show --files SomePackage
+</pre></div>
+</div>
+</li>
+<li><p class="first">列出哪些包过期了，或者说是有新的版本了</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip list --outdated
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2>配置<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h3>配置文件<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>配置文件路径：</p>
+<blockquote>
+<div><ul class="simple">
+<li>Unix: ~/.pip/pip.conf</li>
+<li>Windows: %HOMEPATH%pippip.ini</li>
+</ul>
+</div></blockquote>
+<p>当然，如果你想自定义配置文件的存放路径，
+你可以将你自定义的路径保存到环境变量 <cite>PIP_ONFIG_FILE</cite> 。</p>
+<p>配置文件的格式类似于INI文件。</p>
+<p>当你想添加一个对所有命令都生效的参数时，
+可以将该配置放置在 <cite>[global]</cite> 段中。例如：</p>
+<div class="code ini highlight-python"><div class="highlight"><pre>[global]
+timeout = 60
+index-url = http://pypi.douban.com/simple
+</pre></div>
+</div>
+<p>如果你想针对pip的某个子命令进行配置的话，
+可以将该子命令名称当作段名称，该段内的配置与
+<cite>[global]</cite> 中的配置冲突则会覆盖之。</p>
+<ul>
+<li><p class="first">比如 <cite>freeze</cite> 子命令：</p>
+<div class="code ini highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">freeze</span><span class="p">]</span>
+<span class="n">timeout</span> <span class="o">=</span> <span class="mi">10</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">比如 <cite>install</cite> 子命令：</p>
+<div class="code ini highlight-python"><div class="highlight"><pre>[install]
+ignore-installed = true
+no-dependencies = yes
+find-links =
+       http://mirror1.example.com
+       http://mirror2.example.com
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h3>环境变量<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>pip的命令行参数也可以通过环境变量来设置。
+它的格式为： <cite>PIP_&lt;UPPER_LONG_NAME&gt;</cite> 。</p>
+<ul>
+<li><p class="first">比如设置超时：</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ export PIP_DEFAULT_TIMEOUT=60
+</pre></div>
+</div>
+<p>其效果等于：</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip --default-timeout=60 [...]
+</pre></div>
+</div>
+</li>
+<li><p class="first">比如设置find-links：</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ export PIP_FIND_LINKS=&quot;http://mirror1.example.com http://mirror2.example.com&quot;
+</pre></div>
+</div>
+<p>其效果等于：</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip install --find-links=http://mirror1.example.com
+--find-links=http://mirror2.example.com
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="pip-install">
+<h2>pip install<a class="headerlink" href="#pip-install" title="Permalink to this headline">¶</a></h2>
+<p>安装Python包</p>
+<div class="section" id="id7">
+<h3>使用方法<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip install [options] &lt;requirement specifier&gt; ...
+
+$ pip install [options] -r &lt;requirements file&gt; ...
+
+$ pip install [options] [-e] &lt;vcs project url&gt; ...
+
+$ pip install [options] [-e] &lt;local project path&gt; ...
+
+$ pip install [options] &lt;archive url/path&gt; ...
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="pip-uninstall">
+<h2>pip uninstall<a class="headerlink" href="#pip-uninstall" title="Permalink to this headline">¶</a></h2>
+<p>卸载Python包</p>
+<div class="section" id="id8">
+<h3>使用方法<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip uninstall [options] &lt;package&gt; ...
+
+$ pip uninstall [options] -r &lt;requirements file&gt; ...
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3>已知缺陷<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>目前已知的两种无法正常删除的情况：</p>
+<ul class="simple">
+<li>完全使用disutils模块制定的Python包，
+且通过 <cite>python setup.py install</cite> 来安装的。
+这种包没有什么元信息能够知道它倒底安装了哪些文件。</li>
+<li>通过 <cite>python setup.py develp</cite> 来安装的脚本。</li>
+</ul>
+</div>
+<div class="section" id="id10">
+<h3>参数<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-r</span>, <span class="option">--requirement <var>&lt;file&gt;</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>删除requirements.txt文件中的包含的Python包名，可以跟多个该参数</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-y</span>, <span class="option">--yes</span></kbd></td>
+<td>在删除时不需要确认</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="pip-freeze">
+<h2>pip freeze<a class="headerlink" href="#pip-freeze" title="Permalink to this headline">¶</a></h2>
+<p>将当前Python环境所有的安装包名输出成requirements格式。</p>
+<div class="section" id="id11">
+<h3>使用方法<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip freeze [options]
+</pre></div>
+</div>
+</div>
+<div class="section" id="id12">
+<h3>参数<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-r</span>, <span class="option">--requirement <var>&lt;file&gt;</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td><ul class="first last simple">
+<li>先输出该requirement文件内的Python包名。</li>
+<li>再输出当前环境安装的Python包，
+requirement文件中有的Python包名则不再显示。</li>
+<li>当requirement文件中的包名在环境没有，则会给出提示。</li>
+</ul>
+</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-f</span>, <span class="option">--find-links <var>&lt;url&gt;</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>从该URL来查找Python包，查找出来的Python包名也会输出出来。
+说实话，我还真不知道这个参数的应用场景是什么。</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-l</span>, <span class="option">--local</span></kbd></td>
+<td>如果一个virtualenv环境被配置成能够读取全局的Python包，
+那么在该环境内运行 <cite>pip freeze -l</cite> 时，
+不会显示全局的Python包名。</td></tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id13">
+<h3>常见应用场景<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>当你需要将一个virtualenv环境中复制到另外一个virtualenv环境时，
+你可以先在源virtualenv环境运行命令：</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip freeze &gt; requirements.txt
+</pre></div>
+</div>
+<p>然后再进入目的virtualenv环境运行命令：</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip install -r requirements.txt
+</pre></div>
+</div>
+<p>这样就完成了虚拟环境的复制过程。</p>
+<p>这时可能有人会问，virtualenv环境不就是一个目录么，
+直接拷贝一下，不就一个跟原来一样的新的virtualenv环境么？</p>
+<blockquote>
+<div><p>好吧，我觉得这方法一般情况也可以的。</p>
+<p>但是如果源virtualenv环境和目的virtualenv环境的
+Python版本或者操作系统不一样，
+建议你还是老实地按照上面的说做吧。</p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="pip-list">
+<h2>pip list<a class="headerlink" href="#pip-list" title="Permalink to this headline">¶</a></h2>
+<p>列出当前环境所有已经安装的Python包，包括可编辑的包。</p>
+<p>好像功能和 <cite>pip freeze</cite> 功能差不多的么，
+只是输出的格式不一样。</p>
+<p>可编辑的包是啥意思？暂时还不清楚。</p>
+<div class="section" id="id14">
+<h3>使用方法<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip list [options]
+</pre></div>
+</div>
+</div>
+<div class="section" id="id15">
+<h3>参数<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-o</span>, <span class="option">--outdated</span></kbd></td>
+<td>列出所有有新版本的Python包名（不包括可编辑包）</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-u</span>, <span class="option">--uptodate</span></kbd></td>
+<td>列出所有更新到最新版本的Python包名</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-e</span>, <span class="option">--editable</span></kbd></td>
+<td>列出所有可编辑的包名</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">-l</span>, <span class="option">--local</span></kbd></td>
+<td>如果一个virtualenv环境被配置成能够读取全局的Python包，
+那么在该环境内运行 <cite>pip list -l</cite> 时，
+不会显示全局的Python包名。</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--pre</span></kbd></td>
+<td>列出的包中包括预发行或者是开发包，默认只会列出稳定版本的包</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-i</span>, <span class="option">--index-url <var>&lt;url&gt;</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td><cite>Python Package Index</cite> 的URL地址</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--extra-index-url <var>&lt;url&gt;</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>更多的 <cite>Python Package Index</cite> 的URL地址</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--no-index</span></kbd></td>
+<td>Ignore package index (only looking at –find-links URLs instead).</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-f</span>, <span class="option">--find-links <var>&lt;url&gt;</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>If a url or path to an html file,
+then parse for links to archives.
+If a local path or <a class="reference external" href="file://">file://</a> url that’s a directory,
+then look for archives in the directory listing.</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--allow-external <var>&lt;package&gt;</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Allow the installation of externally hosted files</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--allow-all-external</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Allow the installation of all externally hosted files</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--allow-unverified <var>&lt;package&gt;</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Allow the installation of insecure and unverifiable files</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--process-dependency-links</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Enable the processing of dependency links</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="id16">
+<h2>其它<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id17">
+<h3>国内镜像源<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference external" href="http://pypi.douban.com/">豆瓣PyPI</a></li>
+<li><a class="reference external" href="http://pypi.hustunique.com/">华中理工大学PyPI</a></li>
+<li><a class="reference external" href="http://pypi.sdutlinux.org/">山东理工大学PyPI</a> ， 这个貌似用不了。</li>
+<li><a class="reference external" href="http://pypi.mirrors.ustc.edu.cn/">中国科学技术大学PyPI</a></li>
+</ul>
+<p>可以用pip的 <cite>-i</cite> 参数来指定镜像源。</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip install gevent -i http://pypi.douban.com/simple
+</pre></div>
+</div>
+<p>如果不想每次手动指定，且永久有效的话，
+可以写入到pip的配置文件中。</p>
+<div class="code ini highlight-python"><div class="highlight"><pre>[global]
+index-url = http://pypi.douban.com/simple
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">PIP</a><ul>
+<li><a class="reference internal" href="#id1">安装pip</a></li>
+<li><a class="reference internal" href="#id2">升级pip</a></li>
+<li><a class="reference internal" href="#id3">常用命令介绍</a></li>
+<li><a class="reference internal" href="#id4">配置</a><ul>
+<li><a class="reference internal" href="#id5">配置文件</a></li>
+<li><a class="reference internal" href="#id6">环境变量</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pip-install">pip install</a><ul>
+<li><a class="reference internal" href="#id7">使用方法</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pip-uninstall">pip uninstall</a><ul>
+<li><a class="reference internal" href="#id8">使用方法</a></li>
+<li><a class="reference internal" href="#id9">已知缺陷</a></li>
+<li><a class="reference internal" href="#id10">参数</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pip-freeze">pip freeze</a><ul>
+<li><a class="reference internal" href="#id11">使用方法</a></li>
+<li><a class="reference internal" href="#id12">参数</a></li>
+<li><a class="reference internal" href="#id13">常见应用场景</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pip-list">pip list</a><ul>
+<li><a class="reference internal" href="#id14">使用方法</a></li>
+<li><a class="reference internal" href="#id15">参数</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id16">其它</a><ul>
+<li><a class="reference internal" href="#id17">国内镜像源</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="setuptools.html"
+                        title="previous chapter">setuptools教程</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/pip.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="setuptools.html" title="setuptools教程"
+             >previous</a> |</li>
+        <li><a href="index.html">Python打包指南 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, ChenJie.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

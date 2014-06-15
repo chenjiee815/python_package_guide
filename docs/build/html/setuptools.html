@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>setuptools教程 &mdash; Python打包指南 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Python打包指南 1.0 documentation" href="index.html" />
+    <link rel="prev" title="打包工具对比" href="package_tools.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="package_tools.html" title="打包工具对比"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Python打包指南 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="setuptools">
+<h1>setuptools教程<a class="headerlink" href="#setuptools" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="http://pythonhosted.org/setuptools/">setuptools官方文档</a></p>
+<div class="section" id="id1">
+<h2>推荐用法<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>在项目根目录添加 <a class="reference external" href="https://bootstrap.pypa.io/ez_setup.py/">ez_setup.py</a> 文件，
+然后在setup.py文件的开头添加如下代码：</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">ez_setup</span> <span class="kn">import</span> <span class="n">use_setuptools</span>
+<span class="n">use_setuptools</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>这样写的话，其他人安装你的Python包时，
+如果没有安装setuptools工具，该脚本就会自动下载并安装setuptools。</p>
+<p>当然也可以通过这个脚本来直接安装、更新setuptools：</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ sudo python ez_setup.py -U setuptools
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>基本用法<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>下面是一个最基本的setup.py。</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">setuptools</span> <span class="kn">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">find_packages</span>
+<span class="n">setup</span><span class="p">(</span>
+       <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;HelloWorld&quot;</span><span class="p">,</span>
+       <span class="n">version</span> <span class="o">=</span> <span class="s">&quot;0.1&quot;</span><span class="p">,</span>
+       <span class="n">packages</span> <span class="o">=</span> <span class="n">find_packages</span><span class="p">(),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>就是这里的几行代码，就可以自动查找需要打包的文件，
+将当前的项目打包成eggs，支持上传到 <a class="reference external" href="https://pypi.python.org/pypi/">PyPI</a> 。</p>
+<p>当然如果需要上传到 <a class="reference external" href="https://pypi.python.org/pypi/">PyPI</a> ，最好再添加一些额外信息。</p>
+</div>
+<div class="section" id="id3">
+<h2>版本号格式<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>setuptools能够支持大部分的版本号格式。</p>
+<p>如果您不是很确定您定义的版本号是否被setuptools支持，
+您可以使用pkg_resources.parse_version()来判断。</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pkg_resources</span> <span class="kn">import</span> <span class="n">parse_version</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse_version</span><span class="p">(</span><span class="s">&#39;1.9.a.dev&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">parse_version</span><span class="p">(</span><span class="s">&#39;1.9a0dev&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse_version</span><span class="p">(</span><span class="s">&#39;2.1-rc2&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">parse_version</span><span class="p">(</span><span class="s">&#39;2.1&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse_version</span><span class="p">(</span><span class="s">&#39;0.6a9dev-r41475&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">parse_version</span><span class="p">(</span><span class="s">&#39;0.6a9&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setup">
+<h2>可选的setup()函数参数<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>include_package_data</p>
+<blockquote>
+<div>如果设置为True，setuptools就会在项目目录里自动查找所有的数据文件</div></blockquote>
+<p>exclude_package_data</p>
+<p>package_data</p>
+<p>zip_safe</p>
+<p>install_requires</p>
+<p>entry_points</p>
+<p>extras_require</p>
+<p>setup_requires</p>
+<p>dependency_links</p>
+<p>namespace_packages</p>
+</div>
+<div class="section" id="easy-install">
+<h2>easy_install<a class="headerlink" href="#easy-install" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="pkg-resources">
+<h2>pkg_resources<a class="headerlink" href="#pkg-resources" title="Permalink to this headline">¶</a></h2>
+<p>该模块的全称为： <cite>Package Discovery and Resource Access</cite></p>
+<p>这个模块主要有以下几个功能：</p>
+<ul class="simple">
+<li>提供API给Python库来让它们能够访问它们自己的资源文件</li>
+<li>能让扩展的应用和框架自动发现插件</li>
+<li>给zip格式的eggs包内的C扩展提示运行时支持</li>
+<li>能够合并各种独立分发的Python模块，就是下文的命名空间包</li>
+<li>提供API来管理当前“工作集”中的Python包</li>
+</ul>
+<div class="section" id="id4">
+<h3>命名空间包<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>命名空间包本质算是一个虚拟包，
+这个包主要将多个独立分发的包集合成一个，方便安装。
+比如： <cite>peak</cite> 是一个命名空间包，它包含了一系列不同用途的子包。</p>
+<p>那么如何创建一个命名空间包呢？</p>
+<blockquote>
+<div><p>在 <cite>setup()</cite> 函数中添加 <cite>namespace_package</cite> 参数。
+该参数为一个列表，然后将需要集合的包的名称写进去。</p>
+<p>你也必须在命名空间包的 <cite>__init__.py</cite> 文件中添加
+<cite>__declare_namespace()</cite> 函数的调用。</p>
+</div></blockquote>
+</div>
+<div class="section" id="id5">
+<h3>工作集对象<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">setuptools教程</a><ul>
+<li><a class="reference internal" href="#id1">推荐用法</a></li>
+<li><a class="reference internal" href="#id2">基本用法</a></li>
+<li><a class="reference internal" href="#id3">版本号格式</a></li>
+<li><a class="reference internal" href="#setup">可选的setup()函数参数</a></li>
+<li><a class="reference internal" href="#easy-install">easy_install</a></li>
+<li><a class="reference internal" href="#pkg-resources">pkg_resources</a><ul>
+<li><a class="reference internal" href="#id4">命名空间包</a></li>
+<li><a class="reference internal" href="#id5">工作集对象</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="package_tools.html"
+                        title="previous chapter">打包工具对比</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/setuptools.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="package_tools.html" title="打包工具对比"
+             >previous</a> |</li>
+        <li><a href="index.html">Python打包指南 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, ChenJie.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

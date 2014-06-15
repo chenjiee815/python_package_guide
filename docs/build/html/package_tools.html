@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>打包工具对比 &mdash; Python打包指南 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Python打包指南 1.0 documentation" href="index.html" />
+    <link rel="next" title="setuptools教程" href="setuptools.html" />
+    <link rel="prev" title="setup.py文件解析" href="setup_py.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="setuptools.html" title="setuptools教程"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="setup_py.html" title="setup.py文件解析"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Python打包指南 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="id1">
+<h1>打包工具对比<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="distutils">
+<h2>distutils<a class="headerlink" href="#distutils" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>目前属于Python标准库的一部分。</li>
+<li>只适用于非常简单的应用场景，建议使用setuptools。</li>
+</ul>
+</div>
+<div class="section" id="setuptools">
+<h2>setuptools<a class="headerlink" href="#setuptools" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>setuptools是对distutils的增强, 尤其是引入了包依赖管理。</li>
+<li>setuptools可以为Python包创建egg文件。</li>
+<li>包含包目录内的数据文件。</li>
+<li>自动包含包目录内的所有的包，而不用在setup.py中列举。</li>
+<li>自动包含包内和发布有关的所有相关文件，而不用创建一个MANIFEST.in文件。</li>
+<li>自动生成经过包装的脚本或Windows执行文件。</li>
+<li>支持Pyrex，即在可以setup.py中列出.pyx文件，而最终用户无须安装Pyrex。</li>
+<li>支持上传到PyPI。</li>
+<li>可以部署开发模式，使项目在sys.path中。</li>
+<li>用新命令或setup()参数扩展distutils，为多个项目发布/重用扩展。</li>
+<li>基本满足大型项目的安装和发布。</li>
+</ul>
+</div>
+<div class="section" id="distribute">
+<h2>distribute<a class="headerlink" href="#distribute" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>由于setuptools初期开发进度缓慢, 不支持 Python3, 代码混乱,
+一帮程序员另起炉灶, fork并且重构setuptools代码, 增加功能。</li>
+<li>然后2013年8月，distribute又合并回setuptools 0.7。</li>
+</ul>
+</div>
+<div class="section" id="easy-install">
+<h2>easy_install<a class="headerlink" href="#easy-install" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>setuptools和distribute自带的安装脚本。</li>
+<li>只支持从 <a class="reference external" href="https://pypi.python.org/pypi/">PyPI</a> 下载安装Python包。</li>
+</ul>
+</div>
+<div class="section" id="pip">
+<h2>pip<a class="headerlink" href="#pip" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>pip的目标非常明确：取代easy_install。</li>
+<li>支持安装、卸载包。</li>
+<li>支持从任意能够通过VCS或浏览器访问到的地址安装Python包。</li>
+</ul>
+</div>
+<div class="section" id="distutils2">
+<h2>distutils2<a class="headerlink" href="#distutils2" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>它本来应该成为Python3的标准库packaging，
+在其它Python版本里叫做distutils2。</li>
+<li>该项目在2012年已经停止了，官方文档建议使用setuptools + pip。</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">打包工具对比</a><ul>
+<li><a class="reference internal" href="#distutils">distutils</a></li>
+<li><a class="reference internal" href="#setuptools">setuptools</a></li>
+<li><a class="reference internal" href="#distribute">distribute</a></li>
+<li><a class="reference internal" href="#easy-install">easy_install</a></li>
+<li><a class="reference internal" href="#pip">pip</a></li>
+<li><a class="reference internal" href="#distutils2">distutils2</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="setup_py.html"
+                        title="previous chapter">setup.py文件解析</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="setuptools.html"
+                        title="next chapter">setuptools教程</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/package_tools.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="setuptools.html" title="setuptools教程"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="setup_py.html" title="setup.py文件解析"
+             >previous</a> |</li>
+        <li><a href="index.html">Python打包指南 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, ChenJie.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
