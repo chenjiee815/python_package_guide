@@ -395,14 +395,12 @@ Python版本或者操作系统不一样，
 <tr><td>&nbsp;</td><td>更多的 <cite>Python Package Index</cite> 的URL地址</td></tr>
 <tr><td class="option-group">
 <kbd><span class="option">--no-index</span></kbd></td>
-<td>Ignore package index (only looking at –find-links URLs instead).</td></tr>
+<td>忽略包索引，只与 <cite>&#8211;find-links</cite> 参数配合使用</td></tr>
 <tr><td class="option-group" colspan="2">
 <kbd><span class="option">-f</span>, <span class="option">--find-links <var>&lt;url&gt;</var></span></kbd></td>
 </tr>
-<tr><td>&nbsp;</td><td>If a url or path to an html file,
-then parse for links to archives.
-If a local path or <a class="reference external" href="file://">file://</a> url that’s a directory,
-then look for archives in the directory listing.</td></tr>
+<tr><td>&nbsp;</td><td>如果为一个URL或者是一个指定HTML页面的路径，PIP会从该地址解析出包地址。
+如果是一个本地目录，PIP就会直接从该目录中查找所需要的包。</td></tr>
 <tr><td class="option-group" colspan="2">
 <kbd><span class="option">--allow-external <var>&lt;package&gt;</var></span></kbd></td>
 </tr>
@@ -457,11 +455,23 @@ Python包名或者其简要描述中包含关键字（&lt;query&gt;）的Python�
 </div>
 <div class="section" id="id24">
 <h3>参数<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
-<p>&#8211;index &lt;url&gt; <cite>Python Package Index</cite> URL地址</p>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">--index <var>&lt;url&gt;</var></span></kbd></td>
+<td><cite>Python Package Index</cite> URL地址</td></tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="section" id="pip-wheel">
 <h2>pip wheel<a class="headerlink" href="#pip-wheel" title="Permalink to this headline">¶</a></h2>
+<p>创建wheel格式的Python包</p>
+<p>使用该参数，需要您的环境安装setuptools &gt;= 0.8，并且安装了wheel。</p>
+<p><cite>pip wheel</cite> 使用setuptools扩展 <cite>bdist_wheel</cite> 来制作wheel格式的Python包。</p>
+<p>如果想更多了解wheel，请看 <a class="reference external" href="http://wheel.readthedocs.org/en/latest/">wheel官方文档</a> 。</p>
 <div class="section" id="id25">
 <h3>使用方法<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
 <div class="code bash highlight-python"><div class="highlight"><pre>$ pip pip wheel [options] &lt;requirement specifier&gt; ...
@@ -478,12 +488,96 @@ $ pip wheel [options] &lt;archive url/path&gt; ...
 </div>
 <div class="section" id="id26">
 <h3>参数<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
-</div>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-w</span>, <span class="option">--wheel-dir <var>&lt;dir&gt;</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>wheel格式Python包的存放目录，默认为 <cite>&lt;cwd&gt;/wheelhouse</cite></td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--no-use-wheel</span></kbd></td>
+<td>当在 <cite>Python Package Index</cite> 上查找包时不优先查找wheel格式的Python包</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--build-option <var>&lt;options&gt;</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td><cite>setup.py bdist_wheel</cite> 提供的额外参数</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-r</span>, <span class="option">--requirement <var>&lt;file&gt;</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>从requirements文件进行安装，该参数可以跟多个</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--download-cache <var>&lt;dir&gt;</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>从网上下载的原始Python包的临时存放目录</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--no-deps</span></kbd></td>
+<td>不安装某个包的依赖包</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-b</span>, <span class="option">--build <var>&lt;dir&gt;</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>build目录，在virtualenv环境中默认值为 <cite>&lt;venv path&gt;/build</cite> ,
+在正常环境默认值为 <cite>&lt;OS temp dir&gt;/pip_build_&lt;username&gt;</cite></td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--global-option <var>&lt;options&gt;</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td><cite>bdsit_wheel</cite> 命令所用到的一些全局参数</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--pre</span></kbd></td>
+<td>列出的包中包括预发行或者是开发包，默认只会列出稳定版本的包</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--no-clean</span></kbd></td>
+<td>不清除build目录</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-i</span>, <span class="option">--index-url <var>&lt;url&gt;</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td><cite>Python Package Index</cite> 的URL地址 (默认为 <a class="reference external" href="https://pypi.python.org/simple/">https://pypi.python.org/simple/</a>)</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--extra-index-url <var>&lt;url&gt;</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>更多的 Python Package Index 的URL地址</td></tr>
+<tr><td class="option-group">
+<kbd><span class="option">--no-index</span></kbd></td>
+<td>忽略包索引，只与 <cite>&#8211;find-links</cite> 参数配合使用</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">-f</span>, <span class="option">--find-links <var>&lt;url&gt;</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>如果为一个URL或者是一个指定HTML页面的路径，PIP会从该地址解析出包地址。
+如果是一个本地目录，PIP就会直接从该目录中查找所需要的包。</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--allow-external <var>&lt;package&gt;</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Allow the installation of externally hosted files</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--allow-all-external</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Allow the installation of all externally hosted files</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--allow-unverified <var>&lt;package&gt;</var></span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Allow the installation of insecure and unverifiable files</td></tr>
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--process-dependency-links</span></kbd></td>
+</tr>
+<tr><td>&nbsp;</td><td>Enable the processing of dependency links.</td></tr>
+</tbody>
+</table>
 </div>
 <div class="section" id="id27">
-<h2>其它<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h2>
+<h3>常见应用场景<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
+<p>先将需要的所有第三方Python包打包到本地目录，
+然后再从本地目录直接安装之前已经打包好的wheel格式的Python包。</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip wheel --wheel-dir=/tmp/wheelhouse SomePackage
+$ pip install --no-index --find-links=/tmp/wheelhouse SomePackage
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="id28">
-<h3>国内镜像源<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
+<h2>其它<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id29">
+<h3>国内镜像源<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><a class="reference external" href="http://pypi.douban.com/">豆瓣PyPI</a></li>
 <li><a class="reference external" href="http://pypi.hustunique.com/">华中理工大学PyPI</a></li>
@@ -560,10 +654,11 @@ index-url = http://pypi.douban.com/simple
 <li><a class="reference internal" href="#pip-wheel">pip wheel</a><ul>
 <li><a class="reference internal" href="#id25">使用方法</a></li>
 <li><a class="reference internal" href="#id26">参数</a></li>
+<li><a class="reference internal" href="#id27">常见应用场景</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id27">其它</a><ul>
-<li><a class="reference internal" href="#id28">国内镜像源</a></li>
+<li><a class="reference internal" href="#id28">其它</a><ul>
+<li><a class="reference internal" href="#id29">国内镜像源</a></li>
 </ul>
 </li>
 </ul>

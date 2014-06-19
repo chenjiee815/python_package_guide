@@ -360,16 +360,12 @@ pip list
 
 --extra-index-url <url>  更多的 `Python Package Index` 的URL地址
 
---no-index
-
-  Ignore package index (only looking at –find-links URLs instead).
+--no-index  忽略包索引，只与 `--find-links` 参数配合使用
 
 -f, --find-links <url>
 
-  If a url or path to an html file,
-  then parse for links to archives.
-  If a local path or file:// url that’s a directory,
-  then look for archives in the directory listing.
+  如果为一个URL或者是一个指定HTML页面的路径，PIP会从该地址解析出包地址。
+  如果是一个本地目录，PIP就会直接从该目录中查找所需要的包。
 
 --allow-external <package>  
 
@@ -414,11 +410,17 @@ Python包名或者其简要描述中包含关键字（<query>）的Python包。
 
 参数
 ~~~~
---index <url> `Python Package Index` URL地址
+--index <url>  `Python Package Index` URL地址
 
 pip wheel
 ---------
+创建wheel格式的Python包
 
+使用该参数，需要您的环境安装setuptools >= 0.8，并且安装了wheel。
+
+`pip wheel` 使用setuptools扩展 `bdist_wheel` 来制作wheel格式的Python包。
+
+如果想更多了解wheel，请看 `wheel官方文档`_ 。
 
 使用方法
 ~~~~~~~~
@@ -436,8 +438,58 @@ pip wheel
 
 参数
 ~~~~
+-w, --wheel-dir <dir>  wheel格式Python包的存放目录，默认为 `<cwd>/wheelhouse`
 
- 
+--no-use-wheel  当在 `Python Package Index` 上查找包时不优先查找wheel格式的Python包
+
+--build-option <options>  `setup.py bdist_wheel` 提供的额外参数
+
+-r, --requirement <file>  从requirements文件进行安装，该参数可以跟多个
+
+--download-cache <dir>  从网上下载的原始Python包的临时存放目录
+
+--no-deps  不安装某个包的依赖包
+
+-b, --build <dir>
+
+  build目录，在virtualenv环境中默认值为 `<venv path>/build` ,
+  在正常环境默认值为 `<OS temp dir>/pip_build_<username>`
+
+--global-option <options>  `bdsit_wheel` 命令所用到的一些全局参数
+
+--pre  列出的包中包括预发行或者是开发包，默认只会列出稳定版本的包
+
+--no-clean  不清除build目录
+
+-i, --index-url <url>  `Python Package Index` 的URL地址 (默认为 https://pypi.python.org/simple/)
+
+--extra-index-url <url>  更多的 Python Package Index 的URL地址
+
+--no-index  忽略包索引，只与 `--find-links` 参数配合使用
+
+-f, --find-links <url>  
+
+  如果为一个URL或者是一个指定HTML页面的路径，PIP会从该地址解析出包地址。
+  如果是一个本地目录，PIP就会直接从该目录中查找所需要的包。
+
+--allow-external <package>  Allow the installation of externally hosted files
+
+--allow-all-external  Allow the installation of all externally hosted files
+
+--allow-unverified <package>  Allow the installation of insecure and unverifiable files
+
+--process-dependency-links  Enable the processing of dependency links.
+
+常见应用场景
+~~~~~~~~~~~~
+先将需要的所有第三方Python包打包到本地目录，
+然后再从本地目录直接安装之前已经打包好的wheel格式的Python包。
+
+.. code:: bash
+
+   $ pip wheel --wheel-dir=/tmp/wheelhouse SomePackage
+   $ pip install --no-index --find-links=/tmp/wheelhouse SomePackage
+
 
 其它
 ----
@@ -468,6 +520,7 @@ pip wheel
 
 
 .. _`pip官方文档`: https://pip.pypa.io/en/latest/
+.. _`wheel官方文档`: http://wheel.readthedocs.org/en/latest/
 .. _`get-pip.py`: https://bootstrap.pypa.io/get-pip.py/
 .. _`豆瓣PyPI`: http://pypi.douban.com/
 .. _`华中理工大学PyPI`: http://pypi.hustunique.com/
